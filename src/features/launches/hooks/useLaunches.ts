@@ -6,6 +6,7 @@ export interface QueryObjProps {
   name?: { $regex: string; $options: "i" };
   success?: boolean;
   upcoming?: boolean;
+  date_utc?: { $gte?: string; $lte?: string };
 }
 
 export const useLaunches = (
@@ -13,15 +14,27 @@ export const useLaunches = (
   search: string,
   status: LaunchStatus,
   upcoming: LaunchUpcoming,
+  dateFrom: string,
+  dateTo: string,
 ) => {
   return useQuery({
-    queryKey: ["launches", page, search, status, upcoming],
+    queryKey: ["launches", page, search, status, upcoming, dateFrom, dateTo],
     queryFn: async ({ signal }) => {
       const queryObj: QueryObjProps = {};
 
       if (search) queryObj.name = { $regex: search, $options: "i" };
       if (status !== "all") queryObj.success = status === "success";
       if (upcoming !== "all") queryObj.upcoming = upcoming === "upcoming";
+
+      if (dateFrom || dateTo) {
+        queryObj.date_utc = {};
+        if (dateFrom) {
+          queryObj.date_utc.$gte = `${dateFrom}T00:00:00.000Z`;
+        }
+        if (dateTo) {
+          queryObj.date_utc.$lte = `${dateTo}T23:59:59.999Z`;
+        }
+      }
 
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/launches/query`,
