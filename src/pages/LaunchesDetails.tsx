@@ -48,7 +48,11 @@ export const LaunchDetails = () => {
           <Grid size={{ xs: 12, md: 4 }} textAlign="center">
             <Box
               component="img"
-              src={launch.links.patch.large || launch.links.patch.small}
+              src={
+                launch.links.patch.large ||
+                launch.links.patch.small ||
+                "https://placehold.co/350x196?text=Sem%20imagem"
+              }
               sx={{ width: "100%", maxWidth: 300, mb: 2 }}
             />
             <Stack direction="row" justifyContent="center" spacing={1}>

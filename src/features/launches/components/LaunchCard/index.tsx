@@ -52,7 +52,9 @@ export const LaunchCard = ({
           <CardMedia
             component="img"
             image={
-              links.patch.small || "https://placehold.co/150?text=Sem%20imagem"
+              links.patch.small ||
+              links.flickr.original[0] ||
+              "https://placehold.co/120?text=Sem%20imagem"
             }
             alt={`Patch of ${name}`}
             sx={{ width: 120, height: 120, objectFit: "contain" }}
