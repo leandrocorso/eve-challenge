@@ -74,15 +74,7 @@ export const Home = () => {
           <Grid container spacing={3}>
             {data.docs.map((launch: LaunchProps) => (
               <Grid size={{ xs: 12, sm: 6, md: 4 }} key={launch.id}>
-                <LaunchCard
-                  name={launch.name}
-                  date_utc={launch.date_utc}
-                  success={launch.success}
-                  upcoming={launch.upcoming}
-                  rocketName={launch.rocket?.name || "N/A"}
-                  launchpadName={launch.launchpad?.name || "N/A"}
-                  patchUrl={launch.links.patch.small}
-                />
+                <LaunchCard {...launch} />
               </Grid>
             ))}
           </Grid>
