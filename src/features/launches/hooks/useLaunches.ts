@@ -1,20 +1,39 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useLaunches = (page: number, filters: any) => {
+import type { LaunchStatus, LaunchUpcoming } from "./LaunchProps";
+
+export interface QueryObjProps {
+  name?: { $regex: string; $options: "i" };
+  success?: boolean;
+  upcoming?: boolean;
+}
+
+export const useLaunches = (
+  page: number,
+  search: string,
+  status: LaunchStatus,
+  upcoming: LaunchUpcoming,
+) => {
   return useQuery({
-    queryKey: ["launches", page, filters],
+    queryKey: ["launches", page, search, status, upcoming],
     queryFn: async () => {
+      const queryObj: QueryObjProps = {};
+
+      if (search) queryObj.name = { $regex: search, $options: "i" };
+      if (status !== "all") queryObj.success = status === "success";
+      if (upcoming !== "all") queryObj.upcoming = upcoming === "upcoming";
+
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/launches/query`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            query: {},
+            query: queryObj,
             options: {
               page,
               limit: 12,
-              sort: { date_utc: "desc" },
+              sort: { date_utc: "asc" },
               populate: [
                 { path: "rocket", select: "name" },
                 { path: "launchpad", select: ["name", "locality"] },
