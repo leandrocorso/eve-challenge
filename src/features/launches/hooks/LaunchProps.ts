@@ -1,5 +1,9 @@
+import type { Dayjs } from "dayjs";
+
 export type LaunchStatus = "success" | "failed" | "all";
 export type LaunchUpcoming = "upcoming" | "past" | "all";
+export type DateFrom = Dayjs | null;
+export type DateTo = Dayjs | null;
 
 export type LaunchProps = {
   id: string;

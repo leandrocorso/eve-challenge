@@ -1,6 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type { LaunchStatus, LaunchUpcoming } from "./LaunchProps";
+import type {
+  DateFrom,
+  DateTo,
+  LaunchStatus,
+  LaunchUpcoming,
+} from "./LaunchProps";
 
 export interface QueryObjProps {
   name?: { $regex: string; $options: "i" };
@@ -14,8 +19,8 @@ export const useLaunches = (
   search: string,
   status: LaunchStatus,
   upcoming: LaunchUpcoming,
-  dateFrom: string,
-  dateTo: string,
+  dateFrom: DateFrom,
+  dateTo: DateTo,
 ) => {
   return useQuery({
     queryKey: ["launches", page, search, status, upcoming, dateFrom, dateTo],
@@ -29,10 +34,10 @@ export const useLaunches = (
       if (dateFrom || dateTo) {
         queryObj.date_utc = {};
         if (dateFrom) {
-          queryObj.date_utc.$gte = `${dateFrom}T00:00:00.000Z`;
+          queryObj.date_utc.$gte = dateFrom.startOf("day").toISOString();
         }
         if (dateTo) {
-          queryObj.date_utc.$lte = `${dateTo}T23:59:59.999Z`;
+          queryObj.date_utc.$lte = dateTo.endOf("day").toISOString();
         }
       }
 
@@ -47,7 +52,7 @@ export const useLaunches = (
             options: {
               page,
               limit: 12,
-              sort: { date_utc: "asc" },
+              sort: { date_utc: "desc" },
               populate: [
                 { path: "rocket", select: "name" },
                 { path: "launchpad", select: ["name", "locality"] },
