@@ -58,6 +58,7 @@ export const LaunchDetails = () => {
                 launch.links.patch.small ||
                 "https://placehold.co/350x196?text=Sem%20imagem"
               }
+              alt={`Patch da missão ${launch.name}`}
               sx={{ width: "100%", maxWidth: 300, mb: 2 }}
             />
             <Stack direction="row" justifyContent="center" spacing={1}>
@@ -118,7 +119,7 @@ export const LaunchDetails = () => {
                   href={launch.links.webcast}
                   target="_blank"
                 >
-                  Webcast
+                  YouTube
                 </Button>
               )}
               {launch.links.wikipedia && (
@@ -134,7 +135,6 @@ export const LaunchDetails = () => {
             </Stack>
           </Grid>
 
-          {/* Galeria de Fotos */}
           {launch.links.flickr.original.length > 0 && (
             <Grid size={{ xs: 12 }}>
               <Divider sx={{ my: 4 }} />
@@ -147,7 +147,11 @@ export const LaunchDetails = () => {
                     key={i}
                     sx={{ borderRadius: 2, overflow: "hidden" }}
                   >
-                    <img src={img} alt="Mission" loading="lazy" />
+                    <img
+                      src={img}
+                      alt={`Foto ${i + 1} de ${launch.links.flickr.original.length}`}
+                      loading="lazy"
+                    />
                   </ImageListItem>
                 ))}
               </ImageList>

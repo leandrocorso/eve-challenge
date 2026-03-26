@@ -56,7 +56,7 @@ export const LaunchCard = ({
               links.flickr.original[0] ||
               "https://placehold.co/120?text=Sem%20imagem"
             }
-            alt={`Patch of ${name}`}
+            alt={`Patch da missão ${name}`}
             sx={{ width: 120, height: 120, objectFit: "contain" }}
           />
         </Box>
