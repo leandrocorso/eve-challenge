@@ -93,11 +93,13 @@ export const LaunchDetails = () => {
               </Box>
               <Box display="flex" alignItems="center" gap={1}>
                 <RocketLaunch color="action" />
-                <Typography>{rocket?.name || "Carregando..."}</Typography>
+
+                <Typography>{rocket?.name}</Typography>
+                <Typography variant="caption">({rocket?.type})</Typography>
               </Box>
               <Box display="flex" alignItems="center" gap={1}>
                 <Place color="action" />
-                <Typography>{launchpad?.name || "Carregando..."}</Typography>
+                <Typography>{launchpad?.name}</Typography>
               </Box>
             </Stack>
 
