@@ -7,22 +7,29 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
+import { useDebounce } from "use-debounce";
 
 import { FiltersBar } from "@/features/launches/components/FilterBar";
 import { LaunchCard } from "@/features/launches/components/LaunchCard";
+import {
+  type LaunchUpcoming,
+  type LaunchStatus,
+  type LaunchProps,
+} from "@/features/launches/hooks/LaunchProps";
 import { useLaunches } from "@/features/launches/hooks/useLaunches";
 
 export const Home = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all");
-  const [upcoming, setUpcoming] = useState("all");
+  const [status, setStatus] = useState<LaunchStatus>("all");
+  const [upcoming, setUpcoming] = useState<LaunchUpcoming>("all");
+  const [debouncedSearch] = useDebounce(search, 500);
 
   const { data, isLoading, isError } = useLaunches(
     page,
-    search,
-    // status,
-    // upcoming,
+    debouncedSearch,
+    status,
+    upcoming,
   );
 
   return (
@@ -39,12 +46,12 @@ export const Home = () => {
         }}
         status={status}
         onStatusChange={(val) => {
-          setStatus(val);
+          setStatus(val as LaunchStatus);
           setPage(1);
         }}
         upcoming={upcoming}
         onUpcomingChange={(val) => {
-          setUpcoming(val);
+          setUpcoming(val as LaunchUpcoming);
           setPage(1);
         }}
       />
@@ -58,7 +65,7 @@ export const Home = () => {
       ) : (
         <>
           <Grid container spacing={3}>
-            {data.docs.map((launch: any) => (
+            {data.docs.map((launch: LaunchProps) => (
               <Grid size={{ xs: 12, sm: 6, md: 4 }} key={launch.id}>
                 <LaunchCard
                   name={launch.name}
@@ -73,7 +80,6 @@ export const Home = () => {
             ))}
           </Grid>
 
-          {/* Paginação (Requisito 147) */}
           <Box display="flex" justifyContent="center" mt={4}>
             <Pagination
               count={data.totalPages}
