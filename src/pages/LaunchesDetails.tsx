@@ -1,10 +1,4 @@
-import {
-  ArrowBack,
-  YouTube,
-  Article,
-  RocketLaunch,
-  Place,
-} from "@mui/icons-material";
+import { YouTube, Article, RocketLaunch, Place } from "@mui/icons-material";
 import {
   Container,
   Typography,
@@ -14,14 +8,15 @@ import {
   Stack,
   Chip,
   Button,
-  CircularProgress,
   ImageList,
   ImageListItem,
   Divider,
   Alert,
 } from "@mui/material";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
+import { Header } from "@/common/components/Header";
+import { Loading } from "@/common/components/Loading";
 import {
   useLaunch,
   useRocket,
@@ -30,7 +25,6 @@ import {
 
 export const LaunchDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const { data: launch, isLoading: loadingLaunch } = useLaunch(id);
 
@@ -41,25 +35,13 @@ export const LaunchDetails = () => {
 
   const isLoading = loadingLaunch || loadingRocket || loadingPad;
 
-  if (isLoading) {
-    return (
-      <Box display="flex" justifyContent="center" py={10}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  if (isLoading) return <Loading />;
 
   if (!launch) return <Alert severity="info">Lançamento não encontrado.</Alert>;
 
   return (
     <Container sx={{ py: 4 }}>
-      <Button
-        startIcon={<ArrowBack />}
-        onClick={() => navigate(-1)}
-        sx={{ mb: 3 }}
-      >
-        Voltar
-      </Button>
+      <Header />
 
       <Paper elevation={3} sx={{ p: { xs: 3, md: 5 }, borderRadius: 2 }}>
         <Grid container spacing={6}>

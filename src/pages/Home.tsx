@@ -1,13 +1,7 @@
-import {
-  Container,
-  Grid,
-  Typography,
-  Pagination,
-  Box,
-  CircularProgress,
-  Alert,
-} from "@mui/material";
+import { Container, Grid, Pagination, Box, Alert } from "@mui/material";
 
+import { Header } from "@/common/components/Header";
+import { Loading } from "@/common/components/Loading";
 import { FiltersBar } from "@/features/launches/components/FilterBar";
 import { LaunchCard } from "@/features/launches/components/LaunchCard";
 import {
@@ -36,9 +30,7 @@ export const Home = () => {
 
   return (
     <Container sx={{ py: 4 }}>
-      <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold" }}>
-        Lançamentos SpaceX
-      </Typography>
+      <Header />
 
       <FiltersBar
         search={searchTerm}
@@ -62,9 +54,7 @@ export const Home = () => {
       />
 
       {isLoading ? (
-        <Box display="flex" justifyContent="center" py={10}>
-          <CircularProgress />
-        </Box>
+        <Loading />
       ) : isError ? (
         <Alert severity="error">Erro ao carregar dados.</Alert>
       ) : !data.docs.length ? (
