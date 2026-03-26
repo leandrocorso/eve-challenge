@@ -24,6 +24,8 @@ export const FiltersBar = ({
   dateTo,
   onDateToChange,
 }: FiltersBarProps) => {
+  const isInvalidRange = Boolean(dateFrom && dateTo && dateFrom > dateTo);
+
   return (
     <Box
       sx={{
@@ -85,7 +87,16 @@ export const FiltersBar = ({
             label="Data início"
             value={dateFrom}
             onChange={onDateFromChange}
-            slotProps={{ textField: { fullWidth: true } }}
+            maxDate={dateTo || undefined}
+            slotProps={{
+              textField: {
+                fullWidth: true,
+                error: isInvalidRange,
+                helperText: isInvalidRange
+                  ? "Data início deve ser antes da data fim"
+                  : "",
+              },
+            }}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
@@ -93,7 +104,16 @@ export const FiltersBar = ({
             label="Data fim"
             value={dateTo}
             onChange={onDateToChange}
-            slotProps={{ textField: { fullWidth: true } }}
+            minDate={dateFrom || undefined}
+            slotProps={{
+              textField: {
+                fullWidth: true,
+                error: isInvalidRange,
+                helperText: isInvalidRange
+                  ? "Data fim deve ser após a data início"
+                  : "",
+              },
+            }}
           />
         </Grid>
       </Grid>
