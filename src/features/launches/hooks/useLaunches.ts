@@ -16,7 +16,7 @@ export const useLaunches = (
 ) => {
   return useQuery({
     queryKey: ["launches", page, search, status, upcoming],
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       const queryObj: QueryObjProps = {};
 
       if (search) queryObj.name = { $regex: search, $options: "i" };
@@ -26,6 +26,7 @@ export const useLaunches = (
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/launches/query`,
         {
+          signal,
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
