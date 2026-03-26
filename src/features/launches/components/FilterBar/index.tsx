@@ -110,7 +110,7 @@ export const FiltersBar = ({
                 fullWidth: true,
                 error: isInvalidRange,
                 helperText: isInvalidRange
-                  ? "Data fim deve ser após à data início"
+                  ? "Data fim deve ser posterior à data início"
                   : "",
               },
             }}

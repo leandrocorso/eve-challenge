@@ -5,6 +5,7 @@ import {
   Pagination,
   Box,
   CircularProgress,
+  Alert,
 } from "@mui/material";
 
 import { FiltersBar } from "@/features/launches/components/FilterBar";
@@ -65,7 +66,9 @@ export const Home = () => {
           <CircularProgress />
         </Box>
       ) : isError ? (
-        <Typography color="error">Erro ao carregar dados.</Typography>
+        <Alert severity="error">Erro ao carregar dados.</Alert>
+      ) : !data.docs.length ? (
+        <Alert severity="info">Nenhum lançamento encontrado.</Alert>
       ) : (
         <>
           <Grid container spacing={3}>
@@ -84,14 +87,16 @@ export const Home = () => {
             ))}
           </Grid>
 
-          <Box display="flex" justifyContent="center" mt={4}>
-            <Pagination
-              count={data.totalPages}
-              page={page}
-              onChange={(_, value) => setPage(value)}
-              color="primary"
-            />
-          </Box>
+          {data.totalPages > 1 && (
+            <Box display="flex" justifyContent="center" mt={4}>
+              <Pagination
+                count={data.totalPages}
+                page={page}
+                onChange={(_, value) => setPage(value)}
+                color="primary"
+              />
+            </Box>
+          )}
         </>
       )}
     </Container>
