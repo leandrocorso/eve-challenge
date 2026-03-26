@@ -53,7 +53,7 @@ export const FiltersBar = ({
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel>Tipo</InputLabel>
+          <InputLabel>Lançamentos</InputLabel>
           <Select
             value={upcoming}
             label="Tipo"
