@@ -15,6 +15,8 @@ import {
   type LaunchUpcoming,
   type LaunchStatus,
   type LaunchProps,
+  type DateFrom,
+  type DateTo,
 } from "@/features/launches/hooks/LaunchProps";
 import { useLaunches } from "@/features/launches/hooks/useLaunches";
 
@@ -24,12 +26,16 @@ export const Home = () => {
   const [status, setStatus] = useState<LaunchStatus>("all");
   const [upcoming, setUpcoming] = useState<LaunchUpcoming>("all");
   const [debouncedSearch] = useDebounce(search, 500);
+  const [dateFrom, setDateFrom] = useState<DateFrom>(null);
+  const [dateTo, setDateTo] = useState<DateTo>(null);
 
   const { data, isLoading, isError } = useLaunches(
     page,
     debouncedSearch,
     status,
     upcoming,
+    dateFrom,
+    dateTo,
   );
 
   return (
@@ -53,6 +59,14 @@ export const Home = () => {
         onUpcomingChange={(val) => {
           setUpcoming(val as LaunchUpcoming);
           setPage(1);
+        }}
+        dateFrom={dateFrom}
+        onDateFromChange={(val) => {
+          setDateFrom(val as DateFrom);
+        }}
+        dateTo={dateTo}
+        onDateToChange={(val) => {
+          setDateTo(val as DateTo);
         }}
       />
 
