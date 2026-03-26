@@ -1,4 +1,10 @@
-import { YouTube, Article, RocketLaunch, Place } from "@mui/icons-material";
+import {
+  YouTube,
+  Article,
+  RocketLaunch,
+  Place,
+  Event,
+} from "@mui/icons-material";
 import {
   Container,
   Typography,
@@ -27,7 +33,6 @@ export const LaunchDetails = () => {
   const { id } = useParams();
 
   const { data: launch, isLoading: loadingLaunch } = useLaunch(id);
-
   const { data: rocket, isLoading: loadingRocket } = useRocket(launch?.rocket);
   const { data: launchpad, isLoading: loadingPad } = useLaunchpad(
     launch?.launchpad,
@@ -82,6 +87,10 @@ export const LaunchDetails = () => {
             </Typography>
 
             <Stack direction="row" spacing={3} sx={{ mb: 3 }}>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Event color="action" />
+                {new Date(launch.date_utc).toLocaleDateString()}
+              </Box>
               <Box display="flex" alignItems="center" gap={1}>
                 <RocketLaunch color="action" />
                 <Typography>{rocket?.name || "Carregando..."}</Typography>
