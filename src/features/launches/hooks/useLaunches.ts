@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 
 import type { LaunchFilters, QueryObjProps } from "./LaunchProps";
 
@@ -13,14 +14,13 @@ export const useLaunches = (page: number, filters: LaunchFilters) => {
       if (status !== "all") queryObj.success = status === "success";
       if (upcoming !== "all") queryObj.upcoming = upcoming === "upcoming";
 
-      if (dateFrom || dateTo) {
+      const dFrom = dayjs(dateFrom);
+      const dTo = dayjs(dateTo);
+
+      if (dFrom.isValid() && dTo.isValid()) {
         queryObj.date_utc = {};
-        if (dateFrom) {
-          queryObj.date_utc.$gte = dateFrom.startOf("day").toISOString();
-        }
-        if (dateTo) {
-          queryObj.date_utc.$lte = dateTo.endOf("day").toISOString();
-        }
+        queryObj.date_utc.$gte = dFrom.startOf("day").toISOString();
+        queryObj.date_utc.$lte = dTo.endOf("day").toISOString();
       }
 
       const response = await fetch(
