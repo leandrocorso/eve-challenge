@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -7,17 +7,14 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Home } from "@/pages/Home";
 import { LaunchDetails } from "@/pages/LaunchesDetails";
 
+import { ColorModeProvider } from "./features/colorMode/contexts/ColorModeProvider";
+
 const queryClient = new QueryClient();
-const theme = createTheme({
-  palette: {
-    mode: "light",
-  },
-});
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
+      <ColorModeProvider>
         <CssBaseline />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <BrowserRouter>
@@ -28,7 +25,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </LocalizationProvider>
-      </ThemeProvider>
+      </ColorModeProvider>
     </QueryClientProvider>
   );
 }
