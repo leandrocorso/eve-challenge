@@ -6,37 +6,32 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
-import { useState } from "react";
-import { useDebounce } from "use-debounce";
 
 import { FiltersBar } from "@/features/launches/components/FilterBar";
 import { LaunchCard } from "@/features/launches/components/LaunchCard";
 import {
-  type LaunchUpcoming,
-  type LaunchStatus,
   type LaunchProps,
-  type DateFrom,
-  type DateTo,
+  type LaunchFilters,
 } from "@/features/launches/hooks/LaunchProps";
 import { useLaunches } from "@/features/launches/hooks/useLaunches";
+import { useLaunchFilters } from "@/features/launches/hooks/useLaunchesFilters";
 
 export const Home = () => {
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<LaunchStatus>("all");
-  const [upcoming, setUpcoming] = useState<LaunchUpcoming>("all");
-  const [debouncedSearch] = useDebounce(search, 500);
-  const [dateFrom, setDateFrom] = useState<DateFrom>(null);
-  const [dateTo, setDateTo] = useState<DateTo>(null);
-
-  const { data, isLoading, isError } = useLaunches(
+  const {
+    searchTerm,
+    setSearchTerm,
+    setFilters,
+    activeFilters,
     page,
-    debouncedSearch,
-    status,
-    upcoming,
-    dateFrom,
-    dateTo,
-  );
+    setPage,
+  } = useLaunchFilters();
+
+  const handleChangeFilter = (param: Partial<LaunchFilters>) => {
+    setFilters((prev) => ({ ...prev, ...param }));
+    setPage(1);
+  };
+
+  const { data, isLoading, isError } = useLaunches(page, activeFilters);
 
   return (
     <Container sx={{ py: 4 }}>
@@ -45,29 +40,24 @@ export const Home = () => {
       </Typography>
 
       <FiltersBar
-        search={search}
-        onSearchChange={(val) => {
-          setSearch(val);
-          setPage(1);
-        }}
-        status={status}
-        onStatusChange={(val) => {
-          setStatus(val as LaunchStatus);
-          setPage(1);
-        }}
-        upcoming={upcoming}
-        onUpcomingChange={(val) => {
-          setUpcoming(val as LaunchUpcoming);
-          setPage(1);
-        }}
-        dateFrom={dateFrom}
-        onDateFromChange={(val) => {
-          setDateFrom(val as DateFrom);
-        }}
-        dateTo={dateTo}
-        onDateToChange={(val) => {
-          setDateTo(val as DateTo);
-        }}
+        search={searchTerm}
+        onSearchChange={(val) => setSearchTerm(val)}
+        status={activeFilters.status}
+        onStatusChange={(val) =>
+          handleChangeFilter({ status: val as LaunchFilters["status"] })
+        }
+        upcoming={activeFilters.upcoming}
+        onUpcomingChange={(val) =>
+          handleChangeFilter({ upcoming: val as LaunchFilters["upcoming"] })
+        }
+        dateFrom={activeFilters.dateFrom}
+        onDateFromChange={(val) =>
+          handleChangeFilter({ dateFrom: val as LaunchFilters["dateFrom"] })
+        }
+        dateTo={activeFilters.dateTo}
+        onDateToChange={(val) =>
+          handleChangeFilter({ dateTo: val as LaunchFilters["dateTo"] })
+        }
       />
 
       {isLoading ? (

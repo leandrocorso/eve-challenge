@@ -1,31 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type {
-  DateFrom,
-  DateTo,
-  LaunchStatus,
-  LaunchUpcoming,
-} from "./LaunchProps";
+import type { LaunchFilters, QueryObjProps } from "./LaunchProps";
 
-export interface QueryObjProps {
-  name?: { $regex: string; $options: "i" };
-  success?: boolean;
-  upcoming?: boolean;
-  date_utc?: { $gte?: string; $lte?: string };
-}
-
-export const useLaunches = (
-  page: number,
-  search: string,
-  status: LaunchStatus,
-  upcoming: LaunchUpcoming,
-  dateFrom: DateFrom,
-  dateTo: DateTo,
-) => {
+export const useLaunches = (page: number, filters: LaunchFilters) => {
   return useQuery({
-    queryKey: ["launches", page, search, status, upcoming, dateFrom, dateTo],
+    queryKey: ["launches", page, filters],
     queryFn: async ({ signal }) => {
       const queryObj: QueryObjProps = {};
+      const { search, status, upcoming, dateFrom, dateTo } = filters;
 
       if (search) queryObj.name = { $regex: search, $options: "i" };
       if (status !== "all") queryObj.success = status === "success";

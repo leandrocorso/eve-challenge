@@ -72,7 +72,6 @@ export const LaunchCard = ({
 
           <Typography variant="caption" color="text.secondary">
             {new Date(date_utc).toLocaleDateString()}{" "}
-            {/* Data formatada (Requisito 138) */}
           </Typography>
 
           <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 1 }}>

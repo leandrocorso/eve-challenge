@@ -1,9 +1,19 @@
 import type { Dayjs } from "dayjs";
 
-export type LaunchStatus = "success" | "failed" | "all";
-export type LaunchUpcoming = "upcoming" | "past" | "all";
-export type DateFrom = Dayjs | null;
-export type DateTo = Dayjs | null;
+export type LaunchFilters = {
+  search: string;
+  status: "success" | "failed" | "all";
+  upcoming: "upcoming" | "past" | "all";
+  dateFrom: Dayjs | null;
+  dateTo: Dayjs | null;
+};
+
+export interface QueryObjProps {
+  name?: { $regex: string; $options: "i" };
+  success?: boolean;
+  upcoming?: boolean;
+  date_utc?: { $gte?: string; $lte?: string };
+}
 
 export type LaunchProps = {
   id: string;

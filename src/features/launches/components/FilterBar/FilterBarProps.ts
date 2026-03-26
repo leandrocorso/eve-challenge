@@ -1,6 +1,5 @@
 /* eslint-disable */
 import type { Dayjs } from "dayjs";
-import type { DateFrom, DateTo } from "../../hooks/LaunchProps";
 
 export interface FiltersBarProps {
   search: string;
@@ -9,8 +8,8 @@ export interface FiltersBarProps {
   onStatusChange: (value: string) => void;
   upcoming: string;
   onUpcomingChange: (value: string) => void;
-  dateFrom: DateFrom;
+  dateFrom: Dayjs | null;
   onDateFromChange: (date: Dayjs | null) => void;
-  dateTo: DateTo;
+  dateTo: Dayjs | null;
   onDateToChange: (date: Dayjs | null) => void;
 }
