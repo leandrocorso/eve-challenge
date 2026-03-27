@@ -1,3 +1,5 @@
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useMemo, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
@@ -16,8 +18,10 @@ export const AllProviders = ({
   const queryClient = useMemo(() => createTestQueryClient(), []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
-    </QueryClientProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
+      </QueryClientProvider>
+    </LocalizationProvider>
   );
 };
