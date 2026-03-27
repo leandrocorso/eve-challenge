@@ -15,7 +15,12 @@ export const Header = () => {
   return (
     <>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold" }}>
+        <Typography
+          component="h1"
+          variant="h4"
+          gutterBottom
+          sx={{ fontWeight: "bold" }}
+        >
           Lançamentos SpaceX
         </Typography>
 
