@@ -50,10 +50,12 @@ export const FiltersBar = ({
 
         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
           <FormControl fullWidth>
-            <InputLabel>Status</InputLabel>
+            <InputLabel id="status-label">Status</InputLabel>
             <Select
+              labelId="status-label"
+              id="status"
               value={status}
-              label="Sucesso"
+              label="Status"
               onChange={(e: SelectChangeEvent) =>
                 onStatusChange(e.target.value)
               }
@@ -67,10 +69,12 @@ export const FiltersBar = ({
 
         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
           <FormControl fullWidth>
-            <InputLabel>Lançamentos</InputLabel>
+            <InputLabel id="upcoming-label">Lançamentos</InputLabel>
             <Select
+              labelId="upcoming-label"
               value={upcoming}
-              label="Tipo"
+              id="upcoming"
+              label="Lançamentos"
               onChange={(e: SelectChangeEvent) =>
                 onUpcomingChange(e.target.value)
               }
