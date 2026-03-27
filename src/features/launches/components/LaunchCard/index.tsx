@@ -53,7 +53,7 @@ export const LaunchCard = ({
             component="img"
             image={
               links.patch.small ||
-              links.flickr.original[0] ||
+              links.flickr.original?.[0] ||
               "https://placehold.co/120?text=Sem%20imagem"
             }
             alt={`Patch da missão ${name}`}
