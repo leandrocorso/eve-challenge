@@ -23,5 +23,5 @@ export type LaunchProps = {
   launchpad: { name: string };
   success: boolean;
   upcoming: boolean;
-  links: { patch: { small: string }; flickr: { original: string[] } };
+  links: { patch: { small?: string }; flickr: { original?: string[] } };
 };
