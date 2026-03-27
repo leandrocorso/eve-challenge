@@ -5,12 +5,13 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
+import vitest from "@vitest/eslint-plugin";
 
 export default defineConfig([
   globalIgnores(["dist", "node_modules"]),
   {
     files: ["**/*.{ts,tsx}"],
-    plugins: { import: importPlugin },
+    plugins: { import: importPlugin, vitest },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -19,7 +20,7 @@ export default defineConfig([
     ],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: { ...globals.browser, ...vitest.environments.env.globals },
     },
     settings: {
       "import/resolver": {
@@ -33,6 +34,7 @@ export default defineConfig([
       ...js.configs.recommended.rules,
       ...tseslint.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
+      ...vitest.configs.recommended.rules,
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
