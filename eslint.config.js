@@ -8,7 +8,7 @@ import importPlugin from "eslint-plugin-import";
 import vitest from "@vitest/eslint-plugin";
 
 export default defineConfig([
-  globalIgnores(["dist", "node_modules"]),
+  globalIgnores(["dist", "node_modules", "coverage"]),
   {
     files: ["**/*.{ts,tsx}"],
     plugins: { import: importPlugin, vitest },
