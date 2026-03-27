@@ -89,6 +89,7 @@ export const FiltersBar = ({
         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
           <DatePicker
             label="Data início"
+            className="date-from"
             value={dateFrom}
             onChange={onDateFromChange}
             maxDate={dateTo || undefined}
@@ -106,6 +107,7 @@ export const FiltersBar = ({
         <Grid size={{ xs: 12, sm: 6, md: 2 }}>
           <DatePicker
             label="Data fim"
+            className="date-to"
             value={dateTo}
             onChange={onDateToChange}
             minDate={dateFrom || undefined}
