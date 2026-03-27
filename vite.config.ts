@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
+  preview: { port: 4173, open: true },
   test: {
     globals: true,
     environment: "jsdom",
